@@ -1,0 +1,13 @@
+---
+title: "Mackerel egg survey 4R"
+output:
+    html_document:
+        toc: false
+---
+
+Analysis of the ichtyoplankton data collected in west and south Newfoundland. 
+
+Years included: 2020 (August)
+
+
+

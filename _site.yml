@@ -1,0 +1,18 @@
+name: "Mackerel"
+output_dir: "docs"
+navbar:
+  title: "Mackerel egg survey 4R"
+  left:
+    - icon: fa-cogs
+      href: 0.0_settings.html
+    - text: "CTD"
+      href: 1.0_ctd.html
+    - text: "MAPS"
+      menu:
+        - text: "Overview"
+          href: 2.0_maps.html
+output:
+  html_document:
+    theme: cosmo
+    highlight: textmate
+    css: styles.css
