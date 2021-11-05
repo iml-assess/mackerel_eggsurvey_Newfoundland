@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2021-11-03" />
+<meta name="date" content="2021-11-05" />
 
 <title>CTD data</title>
 
@@ -413,7 +413,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">CTD data</h1>
-<h4 class="date">2021-11-03</h4>
+<h4 class="date">2021-11-05</h4>
 
 </div>
 
@@ -557,7 +557,7 @@ ctd.summary &lt;- ddply(ctd.full,c(&#39;Station&#39;,&#39;Cons&#39;,&#39;day&#39
                  time.start=min(UTC),
                  time.end=max(UTC),
                  duration=difftime(max(UTC),min(UTC)),
-                 sst10=mean(TE90),
+                 sst10=mean(TE90[Depth&lt;10]),
                  depth.ctd=max(Depth))
 write.csv(ctd.summary,file=&#39;csv/ctd_summary.csv&#39;)</code></pre>
 </div>
@@ -590,10 +590,20 @@ write.csv(ctd.summary,file=&#39;csv/ctd_summary.csv&#39;)</code></pre>
 <p><img src="1.0_ctd_files/figure-html/ctd_profile3-1.png" width="864" style="display: block; margin: auto;" /></p>
 </div>
 </div>
+<div id="temperatures" class="section level3 tabset">
+<h3><span class="header-section-number">4.2.2</span> Temperatures</h3>
+<div id="all" class="section level4">
+<h4><span class="header-section-number">4.2.2.1</span> all</h4>
+<pre class="r"><code>ggplot(ctd.full, aes(x=TE90,y=Depth,color=Cons,group=Cons)) + 
+      geom_line() +
+      scale_y_reverse()</code></pre>
+<p><img src="1.0_ctd_files/figure-html/sst_all-1.png" width="864" style="display: block; margin: auto;" /></p>
+</div>
+</div>
 <div id="bongo-depth-checks" class="section level3 tabset">
-<h3><span class="header-section-number">4.2.2</span> Bongo Depth checks</h3>
+<h3><span class="header-section-number">4.2.3</span> Bongo Depth checks</h3>
 <div id="depths" class="section level4">
-<h4><span class="header-section-number">4.2.2.1</span> Depths</h4>
+<h4><span class="header-section-number">4.2.3.1</span> Depths</h4>
 <p>How well did we sample surface-50m?</p>
 <pre class="r"><code>ggplot(ctd.summary, aes(x=bottom,y=depth.ctd)) + 
   geom_point()+
@@ -606,7 +616,7 @@ write.csv(ctd.summary,file=&#39;csv/ctd_summary.csv&#39;)</code></pre>
 <p><img src="1.0_ctd_files/figure-html/depth_check-1.png" width="864" style="display: block; margin: auto;" /></p>
 </div>
 <div id="depth-margin" class="section level4">
-<h4><span class="header-section-number">4.2.2.2</span> Depth margin</h4>
+<h4><span class="header-section-number">4.2.3.2</span> Depth margin</h4>
 <p>How far did we stay from the bottom?</p>
 <pre class="r"><code>ctd.summary$margin &lt;- with(ctd.summary,pmin(bottom,50)-depth.ctd)
 ggplot(ctd.summary, aes(x=margin)) + 

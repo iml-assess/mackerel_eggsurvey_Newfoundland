@@ -150,7 +150,7 @@ ctd.summary <- ddply(ctd.full,c('Station','Cons','day','bottom'),summarise,
                  time.start=min(UTC),
                  time.end=max(UTC),
                  duration=difftime(max(UTC),min(UTC)),
-                 sst10=mean(TE90),
+                 sst10=mean(TE90[Depth<10]),
                  depth.ctd=max(Depth))
 write.csv(ctd.summary,file='csv/ctd_summary.csv')
 ```
@@ -180,6 +180,14 @@ ggplot(ctd.full[ctd.full$Cons %in% 23:44,], aes(x= UTC,y=Depth)) +
 ggplot(ctd.full[ctd.full$Cons %in% 45:62,], aes(x= UTC,y=Depth)) + 
       geom_line() +
       facet_wrap(~Cons,scale='free')+
+      scale_y_reverse()
+```
+
+### Temperatures {.tabset}
+#### all
+```{r sst_all}
+ggplot(ctd.full, aes(x=TE90,y=Depth,color=Cons,group=Cons)) + 
+      geom_line() +
       scale_y_reverse()
 ```
 
