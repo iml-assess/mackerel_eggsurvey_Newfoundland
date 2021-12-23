@@ -127,7 +127,7 @@ stations <- info[info$`Bab./Trib.`=='T',c('Cons','Station','start','Prof. statio
 # get the start and end of each cast
 casts <- ddply(ctd.station,c('id'),summarise,time.start=min(UTC),time.end=max(UTC))  
 
-# the cast of the station if the one where the noted down start if within or around the ctd period.
+# the cast of the station is the one where the noted down start if within or around the ctd period.
 # This does a gradual search of the cast nearest in time.
 stations$id <- sapply(stations$start,function(x){
       error <- 0
@@ -146,7 +146,8 @@ ctd.full <- merge(ctd.station,stations[,c('id','Cons','Station','bottom')])
 ctd.full <- ctd.full[order(ctd.full$UTC),]
 
 # data.frame for Melanie
-ctd.summary <- ddply(ctd.full,c('Station','Cons','day','bottom'),summarise,
+ctd.summary <- ddply(ctd.full,c('Station','Cons','bottom'),summarise,
+                 day=day[1], # first day (in case CTD over two days)
                  time.start=min(UTC),
                  time.end=max(UTC),
                  duration=difftime(max(UTC),min(UTC)),
